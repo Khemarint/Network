@@ -7,7 +7,9 @@ public class Network {
         
         while (true) {
             try {
-                System.out.println("Please choose an option from the menu:");
+                 System.out.println("            ________");
+                System.out.println("            | Menu |");
+                System.out.println("            --------");
                 System.out.println("1. Convert from Decimal to Binary");
                 System.out.println("2. Convert from Binary to Decimal");
                 System.out.println("3. Find Number of Subnets and Hosts");
@@ -15,6 +17,7 @@ public class Network {
                 System.out.println("5. Find Broadcast Address");
                 System.out.println("6. Credit By Khemrent AKA Aegon");
                 System.out.println("7. Exit");
+                 System.out.print("Please choose an option from the menu Above:");
                 
                 int choice = scanner.nextInt();
                 
@@ -59,45 +62,59 @@ public class Network {
                         }
                     }
                 } else if (choice == 3) {
-                    try {
-                        System.out.println("Enter an IP address in slash notation (e.g., 192.168.1.1/24):");
+                    while (true) {
+                        System.out.println("Enter an IP address in slash notation (Ex: 192.168.10.150/28) or -1 to go back to the menu:");
                         String ipAddress = scanner.next();
-                        
-                        // Split the IP address and subnet mask
-                        String[] parts = ipAddress.split("/");
-                        String ip = parts[0];
-                        int subnet = Integer.parseInt(parts[1]);
-                        
-                        // Calculate the number of subnets
-                        int subnets;
-                        if (subnet > 24) {
-                            subnets = (int) Math.pow(2, subnet - 24);
-                        } else if (subnet > 16) {
-                            subnets = (int) Math.pow(2, subnet - 16);
-                        } else if (subnet > 8) {
-                            subnets = (int) Math.pow(2, subnet - 8);
-                        } else {
-                            subnets = 1;
+        
+                        // Check if the user wants to go back to the menu
+                        if (ipAddress.equals("-1")) {
+                            break;
                         }
-                        
-                        // Calculate the number of hosts
-                        int hosts = (int) Math.pow(2, 32 - subnet) - 2;
-                        
-                        System.out.println("The IP address is: " + ip);
-                        System.out.println("The number of subnets is: " + subnets);
-                        System.out.println("The number of hosts is: " + hosts);
-                    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Invalid input. Please enter a valid IP address in slash notation.");
-                        scanner.next();  // Discard the invalid input
+        
+                        try {
+                            // Split the IP address and subnet mask
+                            String[] parts = ipAddress.split("/");
+                            String ip = parts[0];
+                            int subnet = Integer.parseInt(parts[1]);
+        
+                            // Calculate the number of subnets
+                            int subnets;
+                            if (subnet > 24) {
+                                subnets = (int) Math.pow(2, subnet - 24);
+                            } else if (subnet > 16) {
+                                subnets = (int) Math.pow(2, subnet - 16);
+                            } else if (subnet > 8) {
+                                subnets = (int) Math.pow(2, subnet - 8);
+                            } else {
+                                subnets = 1;
+                            }
+        
+                            // Calculate the number of hosts
+                            int hosts = (int) Math.pow(2, 32 - subnet) - 2;
+        
+                            System.out.println("The IP address is: " + ip);
+                            System.out.println("The number of subnets is: " + subnets);
+                            System.out.println("The number of hosts is: " + hosts);
+                        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                            System.out.println("Invalid input. Please enter a valid IP address in slash notation.");
+                            scanner.next();  // Discard the invalid input
+                        }
                     }
                 } else if (choice == 4) {
                     while (true) {
-                        try {
-                            System.out.println("Enter the first binary IP address (Ex: 11000000 10101000 00001010 10010110):");
+                       
+                            System.out.println("Enter the first binary IP address (Ex: 11000000 10101000 00001010 10010110) or -1 to go back to the menu:");
                             scanner.nextLine();  // Consume newline left-over
                             String ip1 = scanner.nextLine().trim();
-                            System.out.println("Enter the second binary IP address (Ex: 11111111 11111111 11111111 11110000):");
+                            if (ip1.equals("-1")) {
+                                 break;
+                            }
+                            System.out.println("Enter the second binary IP address (Ex: 11111111 11111111 11111111 11110000) or -1 to go back to the menu:");
                             String ip2 = scanner.nextLine().trim();
+                            if (ip2.equals("-1")) {
+                                 break;
+                            }
+                         try {
                             
                             // Validate the binary IP addresses
                             if (!ip1.matches("([01]{8} ){3}[01]{8}") || !ip2.matches("([01]{8} ){3}[01]{8}")) {
@@ -135,13 +152,19 @@ public class Network {
                     }
                 } else if (choice == 5) {
                     while (true) {
-                        try {
-                            System.out.println("Enter the binary of Network address (Ex: 11000000 10101000 00001010 10010000):");
+                      
+                            System.out.println("Enter the binary of Network address (Ex: 11000000 10101000 00001010 10010000) or -1 to go back to the menu:");
                             scanner.nextLine();  // Consume newline left-over
                             String ip = scanner.nextLine().trim();
-                            System.out.println("Enter the number of Host bits:");
+                            if (ip.equals("-1")) {
+                                 break;
+                            }
+                            System.out.println("Enter the number of Host bits or -1 to go back to the menu:");
                             int hostBits = scanner.nextInt();
-                            
+                              if (hostBits==-1) {
+                                 break;
+                            }
+                        try {
                             // Validate the binary IP address and number of host bits
                             if (!ip.matches("([01]{8} ){3}[01]{8}") || hostBits < 0 || hostBits > 32) {
                                 throw new IllegalArgumentException("Invalid binary IP address or number of host bits. Binary IP addresses must be four octets separated by spaces, and the number of host bits must be between 0 and 32.");

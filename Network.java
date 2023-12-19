@@ -312,8 +312,8 @@ public class Network {
                             // Convert the result to decimal
                             String resultDecimal = String.format("%d.%d.%d.%d", (result >> 24) & 255, (result >> 16) & 255, (result >> 8) & 255, result & 255);
                             
-                            System.out.println("The result in binary is: " + resultBinary);
-                            System.out.println("The result in decimal is: " + resultDecimal);
+                            System.out.println("The Network address in binary is: " + resultBinary);
+                            System.out.println("The Network address in decimal is: " + resultDecimal);
                             
                             // If the input is valid, break out of the loop
                             break;
@@ -359,8 +359,8 @@ public class Network {
                             // Convert the broadcast address to decimal
                             String broadcastAddressDecimal = String.format("%d.%d.%d.%d", (broadcastAddress >> 24) & 255, (broadcastAddress >> 16) & 255, (broadcastAddress >> 8) & 255, broadcastAddress & 255);
                             
-                            System.out.println("The broadcast address in binary is: " + broadcastAddressBinary);
-                            System.out.println("The broadcast address in decimal is: " + broadcastAddressDecimal);
+                            System.out.println("The Broadcast address in binary is: " + broadcastAddressBinary);
+                            System.out.println("The Broadcast address in decimal is: " + broadcastAddressDecimal);
                             
                             // If the input is valid, break out of the loop
                             break;

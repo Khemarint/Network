@@ -18,9 +18,8 @@ That's all >.< Thank you for Using this program.
 I do this program following the instruction of my Teacher. I did add a picture in this repositories
 which is an example of solving the IP address step by step in Excel.
 
-Any problem Contact me.
-
 Updated guy: I added another option which is option 4. Find Number of Subnet bits and Host(IP with Break into network) 
 In this option when the topic of exercise is provided the information is only IP and Network without slash notation. 
 Example Class B 150.70.20.0 Break into 500 Network.
+
 

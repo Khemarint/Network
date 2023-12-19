@@ -13,7 +13,7 @@ public class Network {
                 System.out.println("1. Convert from Decimal to Binary");
                 System.out.println("2. Convert from Binary to Decimal");
                 System.out.println("3. Find Number of Subnets and Hosts(IP with slash notation)");
-                System.out.println("4. Find Number of Subnet bits and Host(IP with Break in to network)");
+                System.out.println("4. Find Number of Subnet bits and Host(IP with Break into network)");
                 System.out.println("5. Find Network Address");
                 System.out.println("6. Find Broadcast Address");
                 System.out.println("7. Credit By Khemrent AKA Aegon");

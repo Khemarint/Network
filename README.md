@@ -17,7 +17,5 @@ That's all >.< Thank you for Using this program.
 I do this program following the instruction of my Teacher. I did add a picture in this repositories
 which is an example of solving the IP address step by step in Excel.
 
-Alert: In options 4 and 5 if you choose to use that option you can't go back to the menu if you want to go
-back you need to debug the code. Sorry for that. but it's fine don't worry guys.
+Any problem Contact me.
 
-try to update as soon as possible

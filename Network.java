@@ -303,7 +303,7 @@ public class Network {
                 } else if (choice == 8) {
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 6 or 7.");
+                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 6, 7 or 8.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");

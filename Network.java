@@ -126,6 +126,8 @@ public class Network {
                     while (true) {
                         System.out.println("Enter the IP address (Ex: 200.1.1.10) or -1 to go back to the menu:");
                         String ip = scanner.nextLine();
+
+                        scanner.nextLine();
             
                         if (ip.equals("-1")) {
                             break;

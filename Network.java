@@ -390,7 +390,7 @@ public class Network {
                 } else if (choice == 8) {
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 7,8");
+                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 6, 7 or 8.");
                 }
         }
         

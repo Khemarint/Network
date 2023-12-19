@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,7 +18,7 @@ public class Network {
                 System.out.println("4. Find Number of Subnet bits and Host(IP with Break into network)");
                 System.out.println("5. Find Network Address");
                 System.out.println("6. Find Broadcast Address");
-                System.out.println("7. Credit By Khemrent AKA Aegon");
+                System.out.println("7. Credit");
                 System.out.println("8. Exit");
                  System.out.print("Please choose an option from the menu Above:");
                 
@@ -279,7 +281,23 @@ public class Network {
                         }
                     } 
                 } else if (choice == 7) {
-                        System.out.println("This program was created by Khemrent AKA Aegon.");
+                    Scanner fileScanner = null;
+                    try {
+                        File file = new File("Credit.txt"); // replace with your file name
+                        fileScanner = new Scanner(file);
+                
+                        while (fileScanner.hasNextLine()) {
+                            String line = fileScanner.nextLine();
+                            System.out.println(line);
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    } finally {
+                        if (fileScanner != null) {
+                            fileScanner.close();
+                        }
+                    }
                 } else if (choice == 8) {
                     break;
                 } else {

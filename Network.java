@@ -8,7 +8,7 @@ public class Network {
         Scanner scanner = new Scanner(System.in);
         
         while (true) {
-            try {
+           
                  System.out.println("            ________");
                 System.out.println("            | Menu |");
                 System.out.println("            --------");
@@ -27,69 +27,116 @@ public class Network {
                 if (choice == 1) {
                     while (true) {
                         try {
-                            System.out.println("Enter a decimal number (or -1 to return to the menu):");
-                            int num = scanner.nextInt();  // The decimal number to convert
-                            
-                            if (num == -1) {
+                            System.out.println("Enter an IP address (Ex: 200.1.1.10) or -1 to return to the menu:");
+                            String ipAddress = scanner.next();
+                    
+                            // Check if the user wants to go back to the menu
+                            if (ipAddress.equals("-1")) {
                                 break;
                             }
-                            
-                            String binary = Integer.toBinaryString(num);
-                            
-                            // Add leading zeros to make it an 8-bit number
-                            String binaryWithLeadingZeros = String.format("%8s", binary).replace(' ', '0');
-                            
-                            System.out.println("The binary representation is: " + binaryWithLeadingZeros);
-                        } catch (InputMismatchException e) {
-                            System.out.println("Invalid input. Please enter a number.");
+                    
+                            // Split the IP address into octets
+                            String[] octets = ipAddress.split("\\.");
+                    
+                            // Validate the IP address
+                            if (octets.length != 4) {
+                                throw new IllegalArgumentException("Invalid IP address. Please enter a valid IP address.");
+                            }
+                    
+                            StringBuilder binaryIP = new StringBuilder("The binary representation is: ");
+                            for (String octet : octets) {
+                                int num = Integer.parseInt(octet);
+                    
+                                // Validate the octet
+                                if (num < 0 || num > 255) {
+                                    throw new IllegalArgumentException("Invalid octet. It should be between 0 and 255.");
+                                }
+                    
+                                String binary = Integer.toBinaryString(num);
+                    
+                                // Add leading zeros to make it an 8-bit number
+                                String binaryWithLeadingZeros = String.format("%8s", binary).replace(' ', '0');
+                    
+                                binaryIP.append(binaryWithLeadingZeros).append(" ");
+                            }
+                            System.out.println(binaryIP.toString());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter a valid number.");
                             scanner.next();  // Discard the invalid input
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input. " + e.getMessage());
                         }
                     }
+                    
                 } else if (choice == 2) {
                     while (true) {
                         try {
-                            System.out.println("Enter a binary number (or -1 to return to the menu):");
-                            String binary = scanner.next();
-                            
-                            if (binary.equals("-1")) {
+                            System.out.println("Enter a binary IP address (Ex: 11001000.00000001.00000001.00001010) or -1 to return to the menu:");
+                            String binaryIP = scanner.next();
+                    
+                            // Check if the user wants to go back to the menu
+                            if (binaryIP.equals("-1")) {
                                 break;
                             }
-                            
-                            // Convert binary to decimal
-                            int decimal = Integer.parseInt(binary, 2);
-                            
-                            System.out.println("The decimal representation is: " + decimal);
+                    
+                            // Split the binary IP address into octets
+                            String[] octets = binaryIP.split("\\.");
+                    
+                            // Validate the binary IP address
+                            if (octets.length != 4) {
+                                throw new IllegalArgumentException("Invalid binary IP address. Please enter a valid binary IP address.");
+                            }
+                    
+                            StringBuilder decimalIP = new StringBuilder();
+                            for (String octet : octets) {
+                                // Validate the octet
+                                if (!octet.matches("[01]{8}")) {
+                                    throw new IllegalArgumentException("Invalid octet. It should be an 8-bit binary number.");
+                                }
+                    
+                                // Convert binary to decimal
+                                int decimal = Integer.parseInt(octet, 2);
+                    
+                                decimalIP.append(decimal).append(".");
+                            }
+                            // Remove the last dot
+                            decimalIP.setLength(decimalIP.length() - 1);
+                    
+                            System.out.println("The decimal representation of the IP address is: " + decimalIP.toString());
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid binary number. Binary numbers can only contain 0s and 1s.");
                             scanner.next();  // Discard the invalid input
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid input. " + e.getMessage());
                         }
                     }
+                    
                 } else if (choice == 3) {
                     while (true) {
                         System.out.println("Enter an IP address in slash notation (Ex: 192.168.10.150/28) or -1 to go back to the menu:");
                         String ipAddress = scanner.next();
-            
+                    
                         // Check if the user wants to go back to the menu
                         if (ipAddress.equals("-1")) {
                             break;
                         }
-            
+                    
                         try {
                             // Split the IP address and subnet mask
                             String[] parts = ipAddress.split("/");
                             String ip = parts[0];
                             int subnet = Integer.parseInt(parts[1]);
-            
+                    
                             // Validate the IP address
                             if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
                                 throw new IllegalArgumentException("Invalid IP address. Please enter a valid IP address.");
                             }
-            
+                    
                             // Validate the subnet mask
                             if (subnet < 1 || subnet > 32) {
                                 throw new IllegalArgumentException("Invalid subnet mask. It should be between 1 and 32.");
                             }
-            
+                    
                             // Calculate the number of subnets
                             int subnets;
                             if (subnet > 24) {
@@ -101,15 +148,31 @@ public class Network {
                             } else {
                                 subnets = 1;
                             }
-            
+                    
                             // Calculate the number of hosts
                             int hosts = (int) Math.pow(2, 32 - subnet) - 2;
-            
+                    
                             // Calculate the number of subnet bits and host bits
                             int subnetBits = (int) Math.ceil(Math.log(subnets) / Math.log(2));
                             int hostBits = (int) Math.ceil(Math.log(hosts + 2) / Math.log(2));  // add 2 to account for network and broadcast addresses
-            
+                    
+                            // Calculate the subnet mask
+                            StringBuilder subnetMask = new StringBuilder();
+                            for (int i = 0; i < subnet; i++) {
+                                subnetMask.append("1");
+                                if ((i + 1) % 8 == 0 && i != 31) {
+                                    subnetMask.append(".");
+                                }
+                            }
+                            for (int i = subnet; i < 32; i++) {
+                                subnetMask.append("0");
+                                if ((i + 1) % 8 == 0 && i != 31) {
+                                    subnetMask.append(".");
+                                }
+                            }
+                    
                             System.out.println("The IP address is: " + ip);
+                            System.out.println("The subnet mask is: " + subnetMask.toString());
                             System.out.println("The number of subnets is: " + subnets + " (Subnet bits: " + subnetBits + ")");
                             System.out.println("The number of hosts is: " + hosts + " (Host bits: " + hostBits + ")");
                         } catch (NumberFormatException e) {
@@ -122,23 +185,22 @@ public class Network {
                             System.out.println("Invalid input. " + e.getMessage());
                         }
                     }
+                    
                 } else if (choice == 4) {
                     while (true) {
                         System.out.println("Enter the IP address (Ex: 200.1.1.10) or -1 to go back to the menu:");
-                        String ip = scanner.nextLine();
-
-                        scanner.nextLine();
-            
+                        String ip = scanner.next();
+                    
                         if (ip.equals("-1")) {
                             break;
                         }
-            
+                    
                         // Validate the IP address
                         if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
                             System.out.println("Invalid IP address. Please enter a valid IP address.");
                             continue;
                         }
-            
+                    
                         System.out.println("Enter the number of networks or -1 to go back to the menu:");
                         int numNetworks = 0;
                         if (scanner.hasNextInt()) {
@@ -148,43 +210,68 @@ public class Network {
                             scanner.nextLine();  // Consume the invalid token
                             continue;  // Skip to the next iteration if the input is invalid
                         }
-            
+                    
                         if (numNetworks == -1) {
                             break;
                         }
-            
+                    
                         try {
                             if (numNetworks <= 0) {
                                 throw new IllegalArgumentException("Number of networks must be positive.");
                             }
-            
+                    
                             int subnetBits = (int) Math.ceil(Math.log(numNetworks) / Math.log(2));
-            
+                    
                             int classBits;
+                            String subnetMask = "";
                             if (ip.startsWith("10.")) {
                                 classBits = 8;
+                                subnetMask = "11111111.00000000.00000000.00000000";
                             } else if (ip.startsWith("172.") || ip.startsWith("192.")) {
                                 classBits = 16;
+                                subnetMask = "11111111.11111111.00000000.00000000";
                             } else {
                                 classBits = 24;
+                                subnetMask = "11111111.11111111.11111111.00000000";
                             }
-            
+                    
+                            // Calculate subnet mask
+                            String[] subnetMaskParts = subnetMask.split("\\.");
+                            for (int i = 0; i < subnetBits; i++) {
+                                int partIndex = (classBits + i) / 8;
+                                if (partIndex >= subnetMaskParts.length) {
+                                    break;
+                                }
+                                int bitIndex = (classBits + i) % 8;
+                                char[] partBits = subnetMaskParts[partIndex].toCharArray();
+                                if (bitIndex >= partBits.length) {
+                                    break;
+                                }
+                                partBits[bitIndex] = '1';
+                                subnetMaskParts[partIndex] = new String(partBits);
+                            }
+                            
+                            
+                            subnetMask = String.join(".", subnetMaskParts);
+                    
                             int totalBits = classBits + subnetBits;
                             if (totalBits > 32) {
                                 throw new IllegalArgumentException("Too many bits for IP address.");
                             }
-            
+                    
                             int hostBits = 32 - totalBits;
-            
+                    
                             int numHosts = (int) Math.pow(2, hostBits) - 2;
-            
+                    
                             System.out.println("Number of subnets: " + numNetworks);
                             System.out.println("Subnet bits: " + subnetBits);
+                            System.out.println("Subnet mask: " + subnetMask);
                             System.out.println("Number of hosts: " + numHosts + " (Host bits: " + hostBits + ")");
                         } catch (Exception e) {
                             System.out.println("An error occurred: " + e.getMessage());
                         }
                     }
+                    
                 } else if (choice == 5) {
                     while (true) {
                        
@@ -303,12 +390,8 @@ public class Network {
                 } else if (choice == 8) {
                     break;
                 } else {
-                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 6 or 7.");
+                    System.out.println("Invalid choice. Please enter 1, 2, 3, 4, 5, 7,8");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next();  // Discard the invalid input
-            }
         }
         
         System.out.println("Thank you for using this program ^.^");

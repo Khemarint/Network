@@ -13,7 +13,6 @@ and it will give the result of the Network Address in decimal and binary.
 we have found from the subnet mask binary example Host = 2^4-2 and the number 4 is Host bit. after that, it will give us the result of BroadCast
 in decimal and binary.
 
-That's all >.< Thank you for Using this program.
 
 I do this program following the instruction of my Teacher. I did add a picture in this repositories
 which is an example of solving the IP address step by step in Excel.
